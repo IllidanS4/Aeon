@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides access to emulated memory mapped BIOS values.
     /// </summary>
-    internal sealed class Bios
+    public sealed class Bios
     {
         private readonly PhysicalMemory memory;
 
@@ -103,7 +103,7 @@
     /// <summary>
     /// Specifies one of the int 10h video modes.
     /// </summary>
-    internal enum VideoMode10
+    public enum VideoMode10
     {
         /// <summary>
         /// Monochrome 40x25 text mode.

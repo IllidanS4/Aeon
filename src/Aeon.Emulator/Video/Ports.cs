@@ -1,6 +1,6 @@
 ﻿namespace Aeon.Emulator.Video
 {
-    internal static class Ports
+    public static class Ports
     {
         public const int CrtControllerAddress = 0x03B4;
         public const int CrtControllerData = 0x03B5;
@@ -26,7 +26,7 @@
         public const int FeatureControlWriteAlt = 0x03DA;
     }
 
-    internal enum GraphicsRegister
+    public enum GraphicsRegister
     {
         SetReset,
         EnableSetReset,
@@ -39,7 +39,7 @@
         BitMask
     }
 
-    internal enum SequencerRegister
+    public enum SequencerRegister
     {
         Reset,
         ClockingMode,
@@ -48,7 +48,7 @@
         SequencerMemoryMode
     }
 
-    internal enum AttributeControllerRegister
+    public enum AttributeControllerRegister
     {
         FirstPaletteEntry,
         LastPaletteEntry = 0x0F,
@@ -59,7 +59,7 @@
         ColorSelect
     }
 
-    internal enum CrtControllerRegister
+    public enum CrtControllerRegister
     {
         HorizontalTotal,
         EndHorizontalDisplay,

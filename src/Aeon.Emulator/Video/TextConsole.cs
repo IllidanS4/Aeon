@@ -6,7 +6,7 @@ namespace Aeon.Emulator.Video
     /// <summary>
     /// Defines methods and properties for an emulated text console.
     /// </summary>
-    internal sealed class TextConsole
+    public sealed class TextConsole
     {
         private const byte ansiEscape = 0x1B;
         private readonly StringBuilder ansiCommand = new StringBuilder();
@@ -166,6 +166,14 @@ namespace Aeon.Emulator.Video
             var p = new Point(offset % this.Width, offset / this.Width);
             if (p != this.CursorPosition)
                 this.CursorPosition = p;
+        }
+
+        public Span<byte> GetPlaneData(int plane)
+        {
+            if(this.video.CurrentMode is Modes.TextMode mode)
+                return mode.GetPlaneData(plane);
+            else
+                return default;
         }
 
         /// <summary>

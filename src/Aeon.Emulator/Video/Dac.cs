@@ -5,7 +5,7 @@ namespace Aeon.Emulator.Video
     /// <summary>
     /// Emulates the VGA DAC which provides access to the palette.
     /// </summary>
-    internal sealed class Dac
+    public sealed class Dac
     {
         private readonly unsafe uint* palette;
         private readonly UnsafeBuffer<uint> paletteBuffer = new UnsafeBuffer<uint>(256);

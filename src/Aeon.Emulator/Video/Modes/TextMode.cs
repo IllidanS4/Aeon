@@ -293,5 +293,14 @@ namespace Aeon.Emulator.Video.Modes
             //MoveBlock(srcOffset, destOffset, width, height, background);
             //CursorPosition = new Point(x1, y2);
         }
+
+        public unsafe Span<byte> GetPlaneData(int plane)
+        {
+            if(plane < 0 || plane >= 4) throw new ArgumentOutOfRangeException(nameof(plane));
+
+            int pageOffset = DisplayPageSize * this.ActiveDisplayPage;
+
+            return new Span<byte>(planes[plane] + pageOffset, Width * Height);
+        }
     }
 }

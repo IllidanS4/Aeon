@@ -5,7 +5,7 @@ namespace Aeon.Emulator.Video
     /// <summary>
     /// Emulates the VGA Sequencer registers.
     /// </summary>
-    internal sealed class Sequencer : VideoComponent
+    public sealed class Sequencer : VideoComponent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Sequencer"/> class.
@@ -94,7 +94,7 @@ namespace Aeon.Emulator.Video
     }
 
     [Flags]
-    internal enum SequencerMemoryMode : byte
+    public enum SequencerMemoryMode : byte
     {
         None = 0,
         ExtendedMemory = 2,

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Aeon.Emulator.Video
 {
-    internal abstract class VideoComponent
+    public abstract class VideoComponent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VideoComponent"/> class.

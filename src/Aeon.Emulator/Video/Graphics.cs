@@ -5,7 +5,7 @@ namespace Aeon.Emulator.Video
     /// <summary>
     /// Emulates the VGA Graphics registers.
     /// </summary>
-    internal sealed class Graphics : VideoComponent
+    public sealed class Graphics : VideoComponent
     {
         public unsafe readonly byte* ExpandedColorCompare;
         public unsafe readonly byte* ExpandedColorDontCare;

@@ -140,7 +140,7 @@ namespace Aeon.Emulator
         /// <summary>
         /// Gets or sets the emulated video device.
         /// </summary>
-        internal Video.VideoHandler Video { get; set; }
+        public Video.VideoHandler Video { get; set; }
         /// <summary>
         /// Gets or sets the current linear offset of the global descriptor table.
         /// </summary>

@@ -8,7 +8,7 @@ namespace Aeon.Emulator.Video
     /// <summary>
     /// Provides emulated video and int 10h functions.
     /// </summary>
-    internal sealed class VideoHandler : IInterruptHandler, IInputPort, IOutputPort
+    public sealed class VideoHandler : IInterruptHandler, IInputPort, IOutputPort
     {
         /// <summary>
         /// Total number of bytes allocated for video RAM.

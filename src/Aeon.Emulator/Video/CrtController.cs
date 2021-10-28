@@ -3,7 +3,7 @@
     /// <summary>
     /// Emulates the VGA CRT Controller registers.
     /// </summary>
-    internal sealed class CrtController
+    public sealed class CrtController
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CrtController"/> class.

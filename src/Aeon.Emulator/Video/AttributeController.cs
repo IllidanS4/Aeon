@@ -3,7 +3,7 @@
     /// <summary>
     /// Emulates the VGA Attribute Controller registers.
     /// </summary>
-    internal sealed class AttributeController
+    public sealed class AttributeController
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeController"/> class.
