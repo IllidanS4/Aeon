@@ -66,7 +66,7 @@ namespace Aeon.Emulator.Video.Modes
                 }
             }
         }
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(Compatibility.AggressiveOptimization)]
         internal override void SetVramByte(uint offset, byte value)
         {
             offset %= 65536u;
@@ -269,7 +269,7 @@ namespace Aeon.Emulator.Video.Modes
         /// </summary>
         /// <param name="offset">Video RAM offset to write byte.</param>
         /// <param name="input">Byte to write to video RAM.</param>
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         private void SetByteMode2(uint offset, byte input)
         {
             unsafe

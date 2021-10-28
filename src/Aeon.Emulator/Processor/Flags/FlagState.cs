@@ -53,7 +53,7 @@ namespace Aeon.Emulator
 
         public EFlags Value
         {
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(Compatibility.AggressiveOptimization)]
             get
             {
                 var flags = EFlags.Reserved1;
@@ -85,7 +85,7 @@ namespace Aeon.Emulator
                     flags |= EFlags.IOPrivilege2;
                 return flags;
             }
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(Compatibility.AggressiveOptimization)]
             set
             {
                 this.Carry = value.HasFlag(EFlags.Carry);

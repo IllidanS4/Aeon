@@ -5,33 +5,33 @@ namespace Aeon.Emulator.Instructions.Stack
     internal static class Push
     {
         [Opcode("6A ibx", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PushByte(VirtualMachine vm, short value)
         {
             vm.PushToStack((ushort)value);
         }
         [Alternate("PushByte", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PushByteToDWord(VirtualMachine vm, int value)
         {
             vm.PushToStack32((uint)value);
         }
 
         [Opcode("FF/6 rmw|50+ rw|68 iw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PushWord(VirtualMachine vm, ushort value)
         {
             vm.PushToStack(value);
         }
         [Alternate("PushWord", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PushDWord(VirtualMachine vm, uint value)
         {
             vm.PushToStack32(value);
         }
 
         [Opcode("9C", Name = "pushf", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PushFlags(VirtualMachine vm)
         {
             var p = vm.Processor;
@@ -39,7 +39,7 @@ namespace Aeon.Emulator.Instructions.Stack
             p.InstructionEpilog();
         }
         [Alternate(nameof(PushFlags), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PushFlags32(VirtualMachine vm)
         {
             var p = vm.Processor;
@@ -48,7 +48,7 @@ namespace Aeon.Emulator.Instructions.Stack
         }
 
         [Opcode("60", Name = "pusha", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PushAll(VirtualMachine vm)
         {
             var p = vm.Processor;
@@ -61,7 +61,7 @@ namespace Aeon.Emulator.Instructions.Stack
             p.InstructionEpilog();
         }
         [Alternate(nameof(PushAll), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PushAll32(VirtualMachine vm)
         {
             var p = vm.Processor;
@@ -79,7 +79,7 @@ namespace Aeon.Emulator.Instructions.Stack
         }
 
         [Opcode("61", Name = "popa", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PopAll(VirtualMachine vm)
         {
             var p = vm.Processor;
@@ -95,7 +95,7 @@ namespace Aeon.Emulator.Instructions.Stack
             p.InstructionEpilog();
         }
         [Alternate(nameof(PopAll), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PopAll32(VirtualMachine vm)
         {
             var p = vm.Processor;

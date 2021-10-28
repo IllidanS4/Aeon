@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics.X86;
 using System.Text;
 using Aeon.Emulator.DebugSupport;
 using Aeon.Emulator.Memory;
@@ -204,7 +203,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="segment">Segment whose descriptor is returned.</param>
         /// <returns>Descriptor of the specified segment.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public Descriptor GetDescriptor(uint segment)
         {
             uint selectorIndex = segment >> 3;
@@ -237,7 +236,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="interrupt">Interrupt to get handler address for.</param>
         /// <returns>Segment and offset of the interrupt handler.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public RealModeAddress GetRealModeInterruptAddress(byte interrupt)
         {
             ushort offset = GetUInt16(0, (ushort)(interrupt * 4));
@@ -249,7 +248,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="interrupt">Interrupt whose descriptor is returned.</param>
         /// <returns>Interrupt descriptor for the specified interrupt.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public Descriptor GetInterruptDescriptor(byte interrupt)
         {
             unsafe
@@ -315,7 +314,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Physical address of byte to read.</param>
         /// <returns>Byte at the specified address.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public byte GetByte(uint address)
         {
             return this.PagingEnabled ? this.PagedRead<byte>(address) : this.PhysicalRead<byte>(address);
@@ -333,7 +332,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Physical address of byte to write.</param>
         /// <param name="value">Value to write to the specified address.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public void SetByte(uint address, byte value)
         {
             if (this.PagingEnabled)
@@ -348,14 +347,14 @@ namespace Aeon.Emulator
         /// <param name="segment">Segment of unsigned 16-bit integer to read.</param>
         /// <param name="offset">Offset of unsigned 16-bit integer to read.</param>
         /// <returns>Unsigned 16-bit integer at the specified segment and offset.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public ushort GetUInt16(uint segment, uint offset) => this.RealModeRead<ushort>(segment, offset);
         /// <summary>
         /// Reads an unsigned 16-bit integer from emulated memory.
         /// </summary>
         /// <param name="address">Physical address of unsigned 16-bit integer to read.</param>
         /// <returns>Unsigned 16-bit integer at the specified address.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public ushort GetUInt16(uint address)
         {
             return this.PagingEnabled ? this.PagedRead<ushort>(address) : this.PhysicalRead<ushort>(address);
@@ -373,7 +372,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Physical address of unsigned 16-bit integer to write.</param>
         /// <param name="value">Value to write to the specified address.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public void SetUInt16(uint address, ushort value)
         {
             if (this.PagingEnabled)
@@ -394,7 +393,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Physical address of unsigned 32-bit integer to read.</param>
         /// <returns>Unsigned 32-bit integer at the specified address.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public uint GetUInt32(uint address)
         {
             return this.PagingEnabled ? this.PagedRead<uint>(address) : this.PhysicalRead<uint>(address);
@@ -412,7 +411,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Physical address of unsigned 32-bit integer to write.</param>
         /// <param name="value">Value to write to the specified address.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public void SetUInt32(uint address, uint value)
         {
             if (this.PagingEnabled)
@@ -433,7 +432,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Physical address of unsigned 64-bit integer to read.</param>
         /// <returns>Unsigned 64-bit integer at the specified address.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public ulong GetUInt64(uint address)
         {
             return this.PagingEnabled ? this.PagedRead<ulong>(address) : this.PhysicalRead<ulong>(address);
@@ -451,7 +450,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Physical address of unsigned 64-bit integer to write.</param>
         /// <param name="value">Value to write to the specified address.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public void SetUInt64(uint address, ulong value)
         {
             if (this.PagingEnabled)
@@ -465,7 +464,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Address of value to read.</param>
         /// <returns>32-bit System.Single value read from the specified address.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public float GetReal32(uint address)
         {
             return this.PagingEnabled ? this.PagedRead<float>(address) : this.PhysicalRead<float>(address);
@@ -476,7 +475,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Address where value will be written.</param>
         /// <param name="value">32-bit System.Single value to write at the specified address.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public void SetReal32(uint address, float value)
         {
             if (this.PagingEnabled)
@@ -490,7 +489,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Address of value to read.</param>
         /// <returns>64-bit System.Double value read from the specified address.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public double GetReal64(uint address)
         {
             return this.PagingEnabled ? this.PagedRead<double>(address) : this.PhysicalRead<double>(address);
@@ -501,7 +500,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Address where value will be written.</param>
         /// <param name="value">64-bit System.Double value to write at the specified address.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public void SetReal64(uint address, double value)
         {
             if (this.PagingEnabled)
@@ -577,10 +576,19 @@ namespace Aeon.Emulator
         /// <param name="offset">Offset to write string.</param>
         /// <param name="value">String to write to the specified address.</param>
         /// <param name="writeNull">Value indicating whether a null should be written after the string.</param>
-        public void SetString(uint segment, uint offset, string value, bool writeNull)
+        public unsafe void SetString(uint segment, uint offset, string value, bool writeNull)
         {
             var span = GetSpan(segment, offset, value.Length + (writeNull ? 1 : 0));
-            Encoding.ASCII.GetBytes(value, span);
+            if(span.Length > 0)
+            {
+                fixed(char* valuePtr = value)
+                {
+                    fixed(byte* spanPtr = span)
+                    {
+                        Encoding.ASCII.GetBytes(valuePtr, value.Length, spanPtr, span.Length);
+                    }
+                }
+            }
             if (writeNull)
                 span[span.Length - 1] = 0;
         }
@@ -742,7 +750,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="segment">Segment whose descriptor is written.</param>
         /// <param name="descriptor">Descriptor to write.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal void SetDescriptor(uint segment, Descriptor descriptor)
         {
             uint selectorIndex = segment >> 3;
@@ -912,7 +920,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="address">Address where bytes will be read from.</param>
         /// <param name="buffer">Buffer into which bytes will be written.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal unsafe void FetchInstruction(uint address, byte* buffer)
         {
             if (this.PagingEnabled)
@@ -943,7 +951,7 @@ namespace Aeon.Emulator
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.NoInlining | Compatibility.AggressiveOptimization)]
         private unsafe void PagedFetchInstruction(uint address, byte* buffer)
         {
             uint fullPagedAddress = GetPagedPhysicalAddress(address, PageFaultCause.InstructionFetch);
@@ -1018,7 +1026,7 @@ namespace Aeon.Emulator
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(Compatibility.AggressiveOptimization)]
         private T PagedRead<T>(uint logicalAddress, PageFaultCause mode = PageFaultCause.Read, bool checkVram = true) where T : unmanaged
         {
             uint physicalAddress = GetPagedPhysicalAddress(logicalAddress, mode);
@@ -1039,7 +1047,7 @@ namespace Aeon.Emulator
                 }
             }
         }
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(Compatibility.AggressiveOptimization)]
         private void PagedWrite<T>(uint logicalAddress, T value) where T : unmanaged
         {
             uint physicalAddress = GetPagedPhysicalAddress(logicalAddress, PageFaultCause.Write);
@@ -1065,7 +1073,7 @@ namespace Aeon.Emulator
         /// <param name="linearAddress">Paged linear address.</param>
         /// <param name="operation">Type of operation attempted in case of a page fault.</param>
         /// <returns>Physical address of the supplied linear address.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         private uint GetPagedPhysicalAddress(uint linearAddress, PageFaultCause operation)
         {
             uint pageCacheIndex = linearAddress >> 12;
@@ -1093,12 +1101,12 @@ namespace Aeon.Emulator
         /// <param name="linearAddress">Paged linear address.</param>
         /// <param name="operation">Type of operation attempted in case of a page fault.</param>
         /// <returns>Physical address of the page.</returns>
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.NoInlining | Compatibility.AggressiveOptimization)]
         private uint GetPage(uint linearAddress, PageFaultCause operation)
         {
             uint page;
-            if (Bmi1.IsSupported)
-                page = Bmi1.BitFieldExtract(linearAddress, 0x0A0C);
+            if (Compatibility.Bmi1IsSupportedDirect)
+                page = Compatibility.Bmi1BitFieldExtract(linearAddress, 0x0A0C);
             else
                 page = (linearAddress >> 12) & 0x3FFu;
 
@@ -1125,7 +1133,7 @@ namespace Aeon.Emulator
         /// <param name="segment">Memory segment or selector.</param>
         /// <param name="offset">Offset into segment.</param>
         /// <returns>Physical address of the specified segment and offset.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         private uint GetRealModePhysicalAddress(uint segment, uint offset) => ((segment << 4) + offset) & this.addressMask;
         /// <summary>
         /// Provides access to emulated memory for a safe context.

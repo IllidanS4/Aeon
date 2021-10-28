@@ -47,7 +47,7 @@ namespace Aeon.Emulator
                 this.currentValue = null;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.NoInlining)]
+            [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.NoInlining)]
             private bool CalculateValue()
             {
                 int signed;

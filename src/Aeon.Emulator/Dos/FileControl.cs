@@ -541,9 +541,9 @@ namespace Aeon.Emulator.Dos
                     }
 
                     long freeSpace = drive.Mapping?.FreeSpace ?? 0;
-                    ushort freeClusters = (ushort)Math.Clamp(freeSpace / (p.AX * p.CX), 0, ushort.MaxValue);
+                    ushort freeClusters = (ushort)Compatibility.MathClamp(freeSpace / (p.AX * p.CX), 0, ushort.MaxValue);
                     p.BX = (short)freeClusters;
-                    p.DX = (short)Math.Clamp(freeClusters * 2, 0, ushort.MaxValue);
+                    p.DX = (short)Compatibility.MathClamp(freeClusters * 2, 0, ushort.MaxValue);
                     return;
                 }
             }
@@ -682,7 +682,7 @@ namespace Aeon.Emulator.Dos
         {
             var inPath = vm.PhysicalMemory.GetString(vm.Processor.DS, vm.Processor.SI, 128, 0);
 
-            var path = VirtualPath.TryParse(inPath);
+            var path = VirtualPath.TryParse(inPath.AsSpan());
             if (path == null)
             {
                 vm.Processor.Flags.Carry = true;

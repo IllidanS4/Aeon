@@ -5,7 +5,7 @@ namespace Aeon.Emulator.Instructions
     internal static class Conversions
     {
         [Opcode("98", Name = "cbw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void ByteToWord(Processor p)
         {
             p.AX = (sbyte)p.AL;
@@ -13,7 +13,7 @@ namespace Aeon.Emulator.Instructions
             p.InstructionEpilog();
         }
         [Alternate(nameof(ByteToWord), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void ByteToWord32(Processor p)
         {
             p.EAX = p.AX;
@@ -22,7 +22,7 @@ namespace Aeon.Emulator.Instructions
         }
 
         [Opcode("99", Name = "cwd", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void WordToDword(Processor p)
         {
             int result = p.AX;
@@ -31,7 +31,7 @@ namespace Aeon.Emulator.Instructions
             p.InstructionEpilog();
         }
         [Alternate(nameof(WordToDword), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void WordToDword32(Processor p)
         {
             long result = p.EAX;

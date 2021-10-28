@@ -195,7 +195,7 @@ namespace Aeon.Emulator.Instructions
                     args = args.Trim();
                     if (!string.IsNullOrEmpty(args))
                     {
-                        ParseCommand(vm, args);
+                        ParseCommand(vm, args.AsSpan());
                         vm.Processor.Flags.Carry = true;
                     }
                     else
@@ -217,7 +217,7 @@ namespace Aeon.Emulator.Instructions
 
                 vm.Console.WriteLine();
 
-                vm.Processor.Flags.Carry = ParseCommand(vm, input);
+                vm.Processor.Flags.Carry = ParseCommand(vm, input.AsSpan());
             }
         }
 

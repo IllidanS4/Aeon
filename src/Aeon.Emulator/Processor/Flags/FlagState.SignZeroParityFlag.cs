@@ -57,21 +57,21 @@ namespace Aeon.Emulator
                 this.result = result;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(Compatibility.AggressiveOptimization)]
             private bool CalculateSign()
             {
                 bool value = (this.result & (1 << 31)) != 0;
                 this.overrides.Sign = value;
                 return value;
             }
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(Compatibility.AggressiveOptimization)]
             private bool CalculateZero()
             {
                 bool value = this.result == 0;
                 this.overrides.Zero = value;
                 return value;
             }
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(Compatibility.AggressiveOptimization)]
             private bool CalculateParity()
             {
                 bool value = (BitOperations.PopCount(this.result & 0xFFu) & 1) == 0;

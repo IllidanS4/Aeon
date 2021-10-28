@@ -21,7 +21,7 @@ namespace Aeon.Emulator.CommandInterpreter
         }
         public static CommandStatement Parse(string s)
         {
-            var result = ParseInternal(s, out var noEcho);
+            var result = ParseInternal(s.AsSpan(), out var noEcho);
             if (result != null)
             {
                 result.NoEcho = noEcho;
@@ -64,7 +64,7 @@ namespace Aeon.Emulator.CommandInterpreter
         public static bool IsBatchFile(ReadOnlySpan<char> source)
         {
             Split(source.TrimStart(), out var first, out _);
-            return first.EndsWith(".BAT", StringComparison.OrdinalIgnoreCase);
+            return first.EndsWith(".BAT".AsSpan(), StringComparison.OrdinalIgnoreCase);
         }
 
         internal static void Split(ReadOnlySpan<char> source, out ReadOnlySpan<char> first, out ReadOnlySpan<char> remainder)
@@ -107,56 +107,56 @@ namespace Aeon.Emulator.CommandInterpreter
                 return new SetCurrentDriveCommand(new DriveLetter(trimmed[0]));
 
             // cd
-            if (trimmed.Equals("cd", StringComparison.OrdinalIgnoreCase))
+            if (trimmed.Equals("cd".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return new PrintCurrentDirectoryCommand();
 
             // cd dir, cd\dir, cd..
-            if (trimmed.StartsWith("cd", StringComparison.OrdinalIgnoreCase) && trimmed.Length > 2 && (char.IsWhiteSpace(trimmed[2]) || trimmed[2] == '\\' || trimmed[2] == '.'))
+            if (trimmed.StartsWith("cd".AsSpan(), StringComparison.OrdinalIgnoreCase) && trimmed.Length > 2 && (char.IsWhiteSpace(trimmed[2]) || trimmed[2] == '\\' || trimmed[2] == '.'))
                 return new SetCurrentDirectoryCommand(trimmed.Slice(2).Trim().ToString());
 
             Split(s.TrimStart().Slice(noEcho ? 1 : 0), out var commandName, out var args);
 
             // call other.bat
-            if (commandName.Equals("call", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("call".AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 Split(args.TrimStart(), out var batchName, out var batchArgs);
                 return new CallCommand(batchName.Trim().ToString(), batchArgs.Trim().ToString());
             }
 
             // cls
-            if (commandName.Equals("cls", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("cls".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return new ClsCommand();
 
             // dir
-            if (commandName.Equals("dir", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("dir".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return ParseDir(args.Trim());
 
             // echo
-            if (commandName.Equals("echo", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("echo".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return new EchoCommand(args.ToString());
 
             // exit
-            if (commandName.Equals("exit", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("exit".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return new ExitCommand();
 
             // goto
-            if (commandName.Equals("goto", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("goto".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return ParseGoto(args.Trim());
 
             // if
-            if (commandName.Equals("if", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("if".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return ParseIf(args.TrimStart());
 
             // rem
-            if (commandName.Equals("rem", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("rem".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return new RemCommand(args.ToString());
 
             // set
-            if (commandName.Equals("set", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("set".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return ParseSet(args.Trim());
 
             // type
-            if (commandName.Equals("type", StringComparison.OrdinalIgnoreCase))
+            if (commandName.Equals("type".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 return ParseType(args.Trim());
 
             return new LaunchCommand(commandName.ToString(), args.Trim().ToString());
@@ -272,7 +272,7 @@ namespace Aeon.Emulator.CommandInterpreter
             bool not = false;
 
             Split(args, out var next, out var remainder);
-            if (next.Equals("not", StringComparison.OrdinalIgnoreCase))
+            if (next.Equals("not".AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 not = true;
                 var r = remainder.TrimStart();
@@ -286,16 +286,16 @@ namespace Aeon.Emulator.CommandInterpreter
                 return ParseIfEquals(not, args);
             }
 
-            if (next.Equals("errorlevel", StringComparison.OrdinalIgnoreCase))
+            if (next.Equals("errorlevel".AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 Split(remainder.TrimStart(), out next, out remainder);
-                if (!int.TryParse(next, out int errorLevel))
+                if (!int.TryParse(next.ToString(), out int errorLevel))
                     return new InvalidCommand("Invalid errorlevel: " + next.ToString());
 
                 return new IfErrorLevelCommand(not, errorLevel, Parse(remainder.TrimStart()));
             }
 
-            if (next.Equals("exist", StringComparison.OrdinalIgnoreCase))
+            if (next.Equals("exist".AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 Split(remainder.TrimStart(), out next, out remainder);
                 if (next.IsEmpty)
@@ -312,7 +312,7 @@ namespace Aeon.Emulator.CommandInterpreter
                 return new InvalidCommand("Invalid expression.");
 
             var remainder = args.Slice(value1.Length + 2).TrimStart();
-            if (!remainder.StartsWith("=="))
+            if (!remainder.StartsWith("==".AsSpan()))
                 return new InvalidCommand("Invalid expression.");
 
             remainder = remainder[2..].TrimStart();
@@ -326,12 +326,15 @@ namespace Aeon.Emulator.CommandInterpreter
 
             return new IfEqualsCommand(not, value1.ToString(), value2.ToString(), command);
         }
+
+        static readonly char[] equalsChar = { '=' };
+
         private static CommandStatement ParseSet(ReadOnlySpan<char> args)
         {
             if (args.IsEmpty)
                 return new PrintEnvironmentCommand();
 
-            var parts = args.ToString().Split('=', 2);
+            var parts = args.ToString().Split(equalsChar, 2);
             return new SetCommand(parts[0].Trim(), parts.Length > 1 ? parts[1].Trim() : string.Empty);
         }
         private static CommandStatement ParseType(ReadOnlySpan<char> args)

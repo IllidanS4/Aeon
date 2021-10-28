@@ -108,7 +108,7 @@ namespace Aeon.Emulator.CommandInterpreter
             if (!batchFileName.EndsWith(".BAT", StringComparison.OrdinalIgnoreCase))
                 batchFileName += ".BAT";
 
-            if (!this.LoadBatchFile(batchFileName, callCommand.Arguments, out var batchInstance))
+            if (!this.LoadBatchFile(batchFileName.AsSpan(), callCommand.Arguments.AsSpan(), out var batchInstance))
             {
                 this.vm.Console.WriteLine($"Batch file {batchFileName} not found.");
                 return CommandResult.Continue;
@@ -126,7 +126,7 @@ namespace Aeon.Emulator.CommandInterpreter
         }
         internal CommandResult RunCommand(TypeCommand typeCommand)
         {
-            var path = VirtualPath.TryParse(typeCommand.FileName);
+            var path = VirtualPath.TryParse(typeCommand.FileName.AsSpan());
             try
             {
                 path = this.vm.FileSystem.ResolvePath(path);
@@ -143,14 +143,14 @@ namespace Aeon.Emulator.CommandInterpreter
                 {
                     using (var stream = this.vm.FileSystem.OpenFile(path, FileMode.Open, FileAccess.Read).Result)
                     {
-                        Span<byte> buffer = stackalloc byte[64];
-                        Span<char> charBuffer = stackalloc char[64];
-                        int bytesRead = stream.Read(buffer);
+                        var buffer = new byte[64];
+                        var charBuffer = new char[64];
+                        int bytesRead = stream.Read(buffer, 0, buffer.Length);
                         while (bytesRead > 0)
                         {
-                            int charCount = Encoding.Latin1.GetChars(buffer.Slice(0, bytesRead), charBuffer);
-                            this.vm.Console.Write(charBuffer.Slice(0, charCount));
-                            bytesRead = stream.Read(buffer);
+                            int charCount = Compatibility.EncodingLatin1.GetChars(buffer, 0, bytesRead, charBuffer, 0);
+                            this.vm.Console.Write(charBuffer.AsSpan().Slice(0, charCount));
+                            bytesRead = stream.Read(buffer, 0, buffer.Length);
                         }
                     }
 
@@ -176,7 +176,7 @@ namespace Aeon.Emulator.CommandInterpreter
         internal CommandResult RunCommand(SetCurrentDirectoryCommand setCurrentDirectoryCommand)
         {
             var fs = vm.FileSystem;
-            var path = VirtualPath.TryParse(setCurrentDirectoryCommand.Path);
+            var path = VirtualPath.TryParse(setCurrentDirectoryCommand.Path.AsSpan());
             if (path != null)
             {
                 try
@@ -209,7 +209,7 @@ namespace Aeon.Emulator.CommandInterpreter
         {
             var fs = this.vm.FileSystem;
 
-            var target = VirtualPath.TryParse(this.ReplaceVariables(launchCommand.Target));
+            var target = VirtualPath.TryParse(this.ReplaceVariables(launchCommand.Target).AsSpan());
             if (target != null)
             {
                 var targetPath = target.ToString();
@@ -251,7 +251,7 @@ namespace Aeon.Emulator.CommandInterpreter
                 {
                     if (targetPath.EndsWith(".BAT", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (!this.BeginBatch(targetPath, this.ReplaceVariables(launchCommand.Arguments)))
+                        if (!this.BeginBatch(targetPath.AsSpan(), this.ReplaceVariables(launchCommand.Arguments).AsSpan()))
                             vm.Console.WriteLine("Invalid batch script.");
 
                         return CommandResult.Continue;
@@ -330,7 +330,7 @@ namespace Aeon.Emulator.CommandInterpreter
         }
         internal CommandResult RunCommand(DirectoryCommand directoryCommand)
         {
-            var path = VirtualPath.TryParse(directoryCommand.Path ?? ".");
+            var path = VirtualPath.TryParse((directoryCommand.Path ?? ".").AsSpan());
             if (path == VirtualPath.RelativeCurrent)
                 path = new VirtualPath("*.*");
 
@@ -409,7 +409,7 @@ namespace Aeon.Emulator.CommandInterpreter
 
         private string ReplaceVariables(string s)
         {
-            if (string.IsNullOrEmpty(s) || !s.Contains('%'))
+            if (string.IsNullOrEmpty(s) || !s.Contains("%"))
                 return s;
 
             var result = Regex.Replace(

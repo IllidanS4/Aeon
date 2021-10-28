@@ -54,7 +54,7 @@ namespace Aeon.Emulator.Decoding
             var outer = instructionFormat.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             string[] innerCode;
-            if (!outer[0].Contains('+'))
+            if (!outer[0].Contains("+"))
                 innerCode = outer[0].Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             else
                 innerCode = new string[2] { outer[0].TrimEnd('+'), "+" };

@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>preview</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Company>Aeon</Company>
@@ -9,4 +9,15 @@
     <Title>Aeon Core</Title>
     <Version>0.7.0</Version>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="IndexRange" Version="1.0.0" />
+    <PackageReference Include="Shim.System.Numerics" Version="1.0.1" />
+    <PackageReference Include="SkipLocalsInitAttribute.Sources" Version="1.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Memory" Version="4.5.4" />
+    <PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.7.0" />
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
+  </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
     internal static class Div
     {
         [Opcode("F6/6 rmb", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void ByteDivide(Processor p, byte divisor)
         {
             if (divisor != 0)
@@ -26,7 +26,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
         }
 
         [Opcode("F7/6 rmw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void WordDivide(Processor p, ushort divisor)
         {
             if (divisor != 0)
@@ -54,7 +54,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
             }
         }
         [Alternate(nameof(WordDivide), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void DWordDivide(Processor p, uint divisor)
         {
             if (divisor != 0)
@@ -86,7 +86,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
     internal static class IDiv
     {
         [Opcode("F6/7 rmb", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void ByteDivide(Processor p, sbyte divisor)
         {
             if (divisor != 0)
@@ -102,7 +102,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
         }
 
         [Opcode("F7/7 rmw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.NoInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.NoInlining)]
         public static void WordDivide(Processor p, short divisor)
         {
             if (divisor != 0)
@@ -127,7 +127,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
             }
         }
         [Alternate(nameof(WordDivide), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public unsafe static void DWordDivide(Processor p, int divisor)
         {
             if (divisor != 0)

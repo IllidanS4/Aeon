@@ -249,7 +249,7 @@ namespace Aeon.Emulator
         /// Raises a hardware/software interrupt on the virtual machine.
         /// </summary>
         /// <param name="interrupt">Interrupt to raise.</param>
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(Compatibility.AggressiveOptimization)]
         public void RaiseInterrupt(byte interrupt)
         {
             if ((this.Processor.CR0 & CR0.ProtectedModeEnable) == 0)     // Real mode
@@ -591,7 +591,7 @@ namespace Aeon.Emulator
 
             provider.InvokeCallback();
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal void PushToStack(ushort value)
         {
             var p = this.Processor;
@@ -613,13 +613,13 @@ namespace Aeon.Emulator
                 }
             }
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal void PushToStack(ushort value1, ushort value2)
         {
             this.PushToStack(value1);
             this.PushToStack(value2);
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal void PushToStack32(uint value)
         {
             unsafe
@@ -643,7 +643,7 @@ namespace Aeon.Emulator
                 }
             }
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal ushort PopFromStack()
         {
             ushort value;
@@ -667,7 +667,7 @@ namespace Aeon.Emulator
 
             return value;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal uint PopFromStack32()
         {
             uint value;
@@ -691,7 +691,7 @@ namespace Aeon.Emulator
 
             return value;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal void AddToStackPointer(uint value)
         {
             if (!this.BigStackPointer)
@@ -699,7 +699,7 @@ namespace Aeon.Emulator
             else
                 this.Processor.ESP += value;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal ushort PeekStack16()
         {
             uint address;
@@ -713,7 +713,7 @@ namespace Aeon.Emulator
 
             return this.PhysicalMemory.GetUInt16(address);
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal uint PeekStack32()
         {
             uint address;
@@ -727,7 +727,7 @@ namespace Aeon.Emulator
 
             return this.PhysicalMemory.GetUInt32(address);
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal ulong PeekStack48()
         {
             uint address;
@@ -779,7 +779,7 @@ namespace Aeon.Emulator
         /// setting the segment register on the processor directly. This method also updates
         /// the precalculated base address for the segment.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public void WriteSegmentRegister(SegmentIndex segment, ushort value)
         {
             ushort oldValue;
@@ -810,7 +810,7 @@ namespace Aeon.Emulator
                 throw;
             }
         }
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(Compatibility.AggressiveOptimization)]
         internal void UpdateSegment(SegmentIndex segment)
         {
             unsafe

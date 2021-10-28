@@ -573,9 +573,9 @@ namespace Aeon.Emulator
         /// </summary>
         public SegmentRegister SegmentOverride
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             get => this.overrides.Segment;
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             set => this.overrides.Segment = value;
         }
         /// <summary>
@@ -583,9 +583,9 @@ namespace Aeon.Emulator
         /// </summary>
         public RepeatPrefix RepeatPrefix
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             get => this.overrides.Repeat;
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             set => this.overrides.Repeat = value;
         }
         /// <summary>
@@ -643,7 +643,7 @@ namespace Aeon.Emulator
         /// </summary>
         internal uint SizeModeIndex
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             get => (uint)this.SizeOverride ^ this.GlobalSize;
         }
 
@@ -652,7 +652,7 @@ namespace Aeon.Emulator
         /// </summary>
         internal bool InPrefix
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             get => this.PrefixCount != 0;
         }
         #endregion
@@ -670,7 +670,7 @@ namespace Aeon.Emulator
                     return segmentBases[(int)defaultSegment];
             }
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal ushort GetRM16Offset(int rm, ushort displacement)
         {
             unsafe
@@ -694,7 +694,7 @@ namespace Aeon.Emulator
         /// <remarks>
         /// This method must be called explicitly by instructions with no operands.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal void InstructionEpilog() => this.overrides = default;
 
         internal byte[] GetCurrentState()
@@ -734,7 +734,7 @@ namespace Aeon.Emulator
         /// </summary>
         internal byte SizeOverride
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             get => this.overrides.Size;
         }
         /// <summary>
@@ -747,13 +747,13 @@ namespace Aeon.Emulator
         /// </summary>
         internal uint PrefixCount
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             get => this.overrides.Count;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal void IncrementPrefixCount() => this.overrides.IncrementCount();
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         internal void SetSizeOverrideFlag(byte flag) => this.overrides.SetSizeFlag(flag);
 
         /// <summary>
@@ -797,9 +797,9 @@ namespace Aeon.Emulator
         /// </summary>
         internal bool TemporaryInterruptMask
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             get => this.overrides.InterruptMask;
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             set => this.overrides.InterruptMask = value;
         }
         #endregion
@@ -830,16 +830,16 @@ namespace Aeon.Emulator
 
             public RepeatPrefix Repeat
             {
-                [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+                [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
                 readonly get => (RepeatPrefix)(this.repeatAndInterruptMask & 0b11);
-                [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+                [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
                 set => this.repeatAndInterruptMask = (byte)((this.repeatAndInterruptMask & 0b100u) | (uint)value);
             }
             public bool InterruptMask
             {
-                [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+                [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
                 readonly get => (this.repeatAndInterruptMask & 0b100) == 0b100;
-                [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+                [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
                 set
                 {
                     if (value)
@@ -849,9 +849,9 @@ namespace Aeon.Emulator
                 }
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             public void IncrementCount() => this.Count++;
-            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
             public void SetSizeFlag(byte flag) => this.Size |= flag;
         }
     }

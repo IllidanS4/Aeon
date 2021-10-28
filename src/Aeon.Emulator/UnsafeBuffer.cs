@@ -1,15 +1,25 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Aeon.Emulator
 {
-    internal readonly struct UnsafeBuffer<T> where T : unmanaged
+    internal class UnsafeBuffer<T> where T : unmanaged
     {
         private readonly T[] array;
+        private readonly GCHandle handle;
 
-        public UnsafeBuffer(int length) => this.array = GC.AllocateArray<T>(length, pinned: true);
+        public UnsafeBuffer(int length)
+        {
+            this.array = new T[length];
+            handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+        }
 
-        public unsafe T* ToPointer() => (T*)Unsafe.AsPointer(ref this.array[0]);
+        public unsafe T* ToPointer() => (T*)handle.AddrOfPinnedObject();
         public void Clear() => Array.Clear(this.array, 0, this.array.Length);
+
+        ~UnsafeBuffer()
+        {
+            handle.Free();
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace Aeon.Emulator.CommandInterpreter
         public BatchInstance(BatchFile batch, string arguments)
         {
             this.Batch = batch;
-            this.arguments = StatementParser.ParseArguments(arguments);
+            this.arguments = StatementParser.ParseArguments(arguments.AsSpan());
         }
 
         public BatchFile Batch { get; }

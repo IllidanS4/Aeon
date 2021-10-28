@@ -22,12 +22,12 @@ namespace Aeon.Emulator.Dos.Programs
             set => this.position = (int)value;
         }
 
-        public override int Read(Span<byte> buffer)
+        public int Read(Span<byte> buffer)
         {
             int count = Math.Min(buffer.Length, CommandInterpreter.Length - this.position);
             if (count > 0)
             {
-                CommandInterpreter.Slice(this.position, count).CopyTo(buffer);
+                CommandInterpreter.AsSpan().Slice(this.position, count).CopyTo(buffer);
                 this.position += count;
                 return count;
             }
@@ -54,7 +54,7 @@ namespace Aeon.Emulator.Dos.Programs
                 _ => throw new ArgumentException()
             };
         }
-        public override void CopyTo(Stream destination, int bufferSize) => destination.Write(CommandInterpreter.Slice(this.position));
+        public new void CopyTo(Stream destination, int bufferSize) => destination.Write(CommandInterpreter, this.position, CommandInterpreter.Length - this.position);
         public override void SetLength(long value) => throw new NotSupportedException();
         public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
         public override void Flush()

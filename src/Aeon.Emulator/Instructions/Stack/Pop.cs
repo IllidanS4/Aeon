@@ -6,20 +6,20 @@ namespace Aeon.Emulator.Instructions.Stack
     internal static class Pop
     {
         [Opcode("8F/0 rmw|58+ rw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PopWord(VirtualMachine vm, out ushort dest)
         {
             dest = vm.PopFromStack();
         }
         [Alternate(nameof(PopWord), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PopDWord(VirtualMachine vm, out uint dest)
         {
             dest = vm.PopFromStack32();
         }
 
         [Opcode("9D", Name = "popf", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PopFlags(VirtualMachine vm)
         {
             var p = vm.Processor;
@@ -38,7 +38,7 @@ namespace Aeon.Emulator.Instructions.Stack
                 throw new EnableInstructionTrapException();
         }
         [Alternate(nameof(PopFlags), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void PopFlags32(VirtualMachine vm)
         {
             var p = vm.Processor;

@@ -50,7 +50,7 @@ namespace Aeon.Emulator.Dos.VirtualFileSystem
             if (path == null)
                 throw new ArgumentNullException(nameof(path));
 
-            var instance = Parse(path, out var error);
+            var instance = Parse(path.AsSpan(), out var error);
             if (instance == null)
                 throw error;
 
@@ -478,8 +478,8 @@ namespace Aeon.Emulator.Dos.VirtualFileSystem
                 VirtualPathType pathType;
                 DriveLetter? driveLetter = null;
 
-                if (path.Contains('/'))
-                    path = path.ToString().Replace('/', '\\');
+                if (path.IndexOf('/') != -1)
+                    path = path.ToString().Replace('/', '\\').AsSpan();
 
                 if (path.Length >= 2 && path[1] == ':')
                 {

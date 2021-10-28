@@ -5,7 +5,7 @@ namespace Aeon.Emulator.Instructions.FPU
     internal static class Other
     {
         [Opcode("D9FC", Name = "frndint", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void Frndint(Processor p)
         {
             ref var st0 = ref p.FPU.ST0_Ref;
@@ -13,7 +13,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("D9E4", Name = "ftst", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void Ftst(VirtualMachine vm)
         {
             vm.Processor.FPU.StatusFlags &= ~ConditionCodes.ConditionMask;

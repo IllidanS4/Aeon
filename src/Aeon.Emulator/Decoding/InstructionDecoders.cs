@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,8 +27,8 @@ namespace Aeon.Emulator.Decoding
         private static unsafe void GetModRm(ref byte* ip, out byte mod, out byte rm)
         {
             rm = (byte)(*ip & 0x07u);
-            if (Bmi1.IsSupported)
-                mod = (byte)Bmi1.BitFieldExtract(*ip, 0x0206);
+            if (Compatibility.Bmi1IsSupportedDirect)
+                mod = (byte)Compatibility.Bmi1BitFieldExtract(*ip, 0x0206);
             else
                 mod = (byte)((*ip & 0xC0u) >> 6);
         }

@@ -227,7 +227,7 @@ namespace Aeon.Emulator
         /// Pushes a value onto the next ST register.
         /// </summary>
         /// <param name="value">Value to push.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public void Push(double value)
         {
             top = (top - 1u) & 0x7u;
@@ -248,7 +248,7 @@ namespace Aeon.Emulator
         /// <summary>
         /// Pops the value at ST0.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public void Pop()
         {
             unsafe
@@ -323,7 +323,7 @@ namespace Aeon.Emulator
         /// </summary>
         /// <param name="value">Value to round.</param>
         /// <returns>Rounded value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public double Round(double value)
         {
             var mode = this.RoundingMode;

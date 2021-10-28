@@ -6,7 +6,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
     internal static class Mul
     {
         [Opcode("F6/4 rmb", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void ByteMultiply(Processor p, byte multiplicand)
         {
             p.AX = (short)((uint)p.AL * multiplicand);
@@ -14,7 +14,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
         }
 
         [Opcode("F7/4 rmw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void WordMultiply(Processor p, ushort multiplicand)
         {
             ref var ax = ref p.AX;
@@ -31,7 +31,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
             p.Flags.Update_Mul((ushort)dx);
         }
         [Alternate(nameof(WordMultiply), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void DWordMultiply(Processor p, uint multiplicand)
         {
             ref var eax = ref p.EAX;
@@ -51,14 +51,14 @@ namespace Aeon.Emulator.Instructions.Arithmetic
     internal static class IMul
     {
         [Opcode("F6/5 rmb", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void ByteMultiply(Processor p, sbyte multiplicand)
         {
             p.AX = (short)((sbyte)p.AL * multiplicand);
             p.Flags.Update_IMul((sbyte)p.AH);
         }
         [Opcode("F7/5 rmw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void WordMultiply(Processor p, short multiplicand)
         {
             ref var ax = ref p.AX;
@@ -75,7 +75,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
             p.Flags.Update_IMul(dx);
         }
         [Alternate(nameof(WordMultiply), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void DWordMultiply(Processor p, int multiplicand)
         {
             ref var eax = ref p.EAX;
@@ -93,7 +93,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
         }
 
         [Opcode("0FAF/r rw,rmw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void WordMultiply2(Processor p, ref short value1, short value2)
         {
             int temp = value1 * value2;
@@ -101,7 +101,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
             value1 = (short)temp;
         }
         [Alternate(nameof(WordMultiply2), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void DWordMultiply2(Processor p, ref int value1, int value2)
         {
             long temp = Math.BigMul(value1, value2);
@@ -110,7 +110,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
         }
 
         [Opcode("6B/r rw,rmw,ibx|69/r rw,rmw,iw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void WordMultiply3(Processor p, out short result, short multiplicand1, short multiplicand2)
         {
             int temp = multiplicand1 * multiplicand2;
@@ -118,7 +118,7 @@ namespace Aeon.Emulator.Instructions.Arithmetic
             result = (short)temp;
         }
         [Alternate(nameof(WordMultiply3), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(Compatibility.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static void DWordMultiply3(Processor p, out int result, int multiplicand1, int multiplicand2)
         {
             long temp = Math.BigMul(multiplicand1, multiplicand2);

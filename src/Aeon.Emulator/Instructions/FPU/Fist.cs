@@ -5,7 +5,7 @@ namespace Aeon.Emulator.Instructions.FPU
     internal static class Fist
     {
         [Opcode("DF/2 m16", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void StoreInt16(Processor p, out short dest)
         {
             var res = p.FPU.Round(p.FPU.ST0);
@@ -18,7 +18,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("DB/2 m32", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void StoreInt32(Processor p, out int dest)
         {
             var res = p.FPU.Round(p.FPU.ST0);
@@ -34,7 +34,7 @@ namespace Aeon.Emulator.Instructions.FPU
     internal static class Fistp
     {
         [Opcode("DF/3 m16", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void StoreInt16(Processor p, out short dest)
         {
             Fist.StoreInt16(p, out dest);
@@ -42,7 +42,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("DB/3 m32", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void StoreInt32(Processor p, out int dest)
         {
             Fist.StoreInt32(p, out dest);
@@ -50,7 +50,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("DF/7 m64", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void StoreInt64(Processor p, out long dest)
         {
             dest = (long)p.FPU.Round(p.FPU.ST0);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection.Emit;
-using System.Runtime.Intrinsics.X86;
 
 namespace Aeon.Emulator.Decoding.Emitters
 {
@@ -39,7 +38,7 @@ namespace Aeon.Emulator.Decoding.Emitters
             //il.LoadLocal(ipPointer);
             LoadIPPointer();
             il.Emit(OpCodes.Ldind_U1);
-            if (Bmi1.IsSupported)
+            if (Compatibility.Bmi1IsSupported)
             {
                 il.LoadConstant(0x0303);
                 il.Emit(OpCodes.Call, Infos.Intrinsics.BitFieldExtract);

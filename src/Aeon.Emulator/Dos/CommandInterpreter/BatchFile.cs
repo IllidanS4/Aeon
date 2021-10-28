@@ -22,7 +22,7 @@ namespace Aeon.Emulator.CommandInterpreter
 
         public static BatchFile Load(Stream stream)
         {
-            using var reader = new StreamReader(stream, Encoding.Latin1, leaveOpen: true);
+            using var reader = new StreamReader(stream, Compatibility.EncodingLatin1, true, -1, true);
             return Load(reader);
         }
         public static BatchFile Load(TextReader reader)

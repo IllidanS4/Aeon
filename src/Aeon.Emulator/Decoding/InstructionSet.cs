@@ -57,7 +57,7 @@ namespace Aeon.Emulator.Decoding
         }
 
         [SkipLocalsInit]
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(Compatibility.AggressiveOptimization)]
         internal static void Emulate(VirtualMachine vm, uint count)
         {
             var processor = vm.Processor;

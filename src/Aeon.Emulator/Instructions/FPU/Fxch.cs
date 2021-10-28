@@ -10,7 +10,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("D9C9", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void Exchange1(Processor p)
         {
             ref var st0 = ref p.FPU.ST0_Ref;
@@ -21,7 +21,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("D9CA", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void Exchange2(Processor p)
         {
             ref var st0 = ref p.FPU.ST0_Ref;
@@ -32,7 +32,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("D9CB", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void Exchange3(Processor p)
         {
             ref var st0 = ref p.FPU.ST0_Ref;
@@ -43,7 +43,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("D9CC", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void Exchange4(Processor p)
         {
             ref var st0 = ref p.FPU.ST0_Ref;
@@ -54,7 +54,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("D9CD", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void Exchange5(Processor p)
         {
             ref var st0 = ref p.FPU.ST0_Ref;
@@ -65,7 +65,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("D9CE", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void Exchange6(Processor p)
         {
             ref var st0 = ref p.FPU.ST0_Ref;
@@ -76,7 +76,7 @@ namespace Aeon.Emulator.Instructions.FPU
         }
 
         [Opcode("D9CF", OperandSize = 16 | 32, AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void Exchange7(Processor p)
         {
             ref var st0 = ref p.FPU.ST0_Ref;

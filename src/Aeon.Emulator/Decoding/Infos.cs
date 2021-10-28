@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Runtime.Intrinsics.X86;
+﻿using System;
+using System.Reflection;
 
 namespace Aeon.Emulator.Decoding
 {
@@ -122,7 +122,7 @@ namespace Aeon.Emulator.Decoding
 
         public static class Intrinsics
         {
-            public static readonly MethodInfo BitFieldExtract = typeof(Bmi1).GetMethod(nameof(Bmi1.BitFieldExtract), new[] { typeof(uint), typeof(ushort) });
+            public static readonly MethodInfo BitFieldExtract = Type.GetType("System.Runtime.Intrinsics.X86.Bmi1", false)?.GetMethod("BitFieldExtract", new[] { typeof(uint), typeof(ushort) });
         }
     }
 }

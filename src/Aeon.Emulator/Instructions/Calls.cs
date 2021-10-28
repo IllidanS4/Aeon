@@ -7,7 +7,7 @@ namespace Aeon.Emulator.Instructions
     internal static class Call
     {
         [Opcode("E8 irelw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void NearRelativeCall(VirtualMachine vm, short offset)
         {
             int ip = vm.Processor.IP;
@@ -16,7 +16,7 @@ namespace Aeon.Emulator.Instructions
             vm.Processor.EIP = (ushort)(ip + offset);
         }
         [Alternate(nameof(NearRelativeCall), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void NearRelativeCall32(VirtualMachine vm, int offset)
         {
             int ip = (int)vm.Processor.EIP;
@@ -26,7 +26,7 @@ namespace Aeon.Emulator.Instructions
         }
 
         [Opcode("FF/2 jmprmw", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void NearAbsoluteCall(VirtualMachine vm, ushort ip)
         {
             vm.PushToStack(vm.Processor.IP);
@@ -34,7 +34,7 @@ namespace Aeon.Emulator.Instructions
             vm.Processor.EIP = ip;
         }
         [Alternate(nameof(NearAbsoluteCall), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void NearAbsoluteCall32(VirtualMachine vm, uint ip)
         {
             vm.PushToStack32(vm.Processor.EIP);
@@ -43,7 +43,7 @@ namespace Aeon.Emulator.Instructions
         }
 
         [Opcode("9A iptr|FF/3 mptr", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void FarAbsoluteCall(VirtualMachine vm, uint address)
         {
             if (address == 0)
@@ -63,7 +63,7 @@ namespace Aeon.Emulator.Instructions
             }
         }
         [Alternate(nameof(FarAbsoluteCall), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void FarAbsoluteCall32(VirtualMachine vm, ulong address)
         {
             if (address == 0)
@@ -84,7 +84,7 @@ namespace Aeon.Emulator.Instructions
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         private static void ProtectedModeFarCall(VirtualMachine vm, ushort selector, uint offset, bool is32Bit)
         {
             var descriptor = vm.PhysicalMemory.GetDescriptor(selector);
@@ -149,7 +149,7 @@ namespace Aeon.Emulator.Instructions
     internal static class Ret
     {
         [Opcode("C3", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void NearReturn(VirtualMachine vm)
         {
             vm.Processor.EIP = vm.PopFromStack();
@@ -157,7 +157,7 @@ namespace Aeon.Emulator.Instructions
             vm.Processor.InstructionEpilog();
         }
         [Alternate(nameof(NearReturn), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void NearReturn32(VirtualMachine vm)
         {
             vm.Processor.EIP = vm.PopFromStack32();
@@ -166,14 +166,14 @@ namespace Aeon.Emulator.Instructions
         }
 
         [Opcode("C2 i16", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void NearReturnPop(VirtualMachine vm, ushort bytesToPop)
         {
             vm.Processor.EIP = vm.PopFromStack();
             vm.AddToStackPointer(bytesToPop);
         }
         [Alternate("NearReturnPop", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void NearReturnPop32(VirtualMachine vm, ushort bytesToPop)
         {
             vm.Processor.EIP = vm.PopFromStack32();
@@ -181,14 +181,14 @@ namespace Aeon.Emulator.Instructions
         }
 
         [Opcode("CB", AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void FarReturn(VirtualMachine vm)
         {
             FarReturnPop(vm, 0);
             vm.Processor.InstructionEpilog();
         }
         [Alternate(nameof(FarReturn), AddressSize = 16 | 32)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void FarReturn32(VirtualMachine vm)
         {
             FarReturnPop32(vm, 0);
@@ -196,7 +196,7 @@ namespace Aeon.Emulator.Instructions
         }
 
         [Opcode("CA i16")]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void FarReturnPop(VirtualMachine vm, ushort bytesToPop)
         {
             uint dest = vm.PeekStack32();
@@ -216,7 +216,7 @@ namespace Aeon.Emulator.Instructions
             vm.AddToStackPointer(4u + bytesToPop);
         }
         [Alternate(nameof(FarReturnPop))]
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | Compatibility.AggressiveOptimization)]
         public static void FarReturnPop32(VirtualMachine vm, ushort bytesToPop)
         {
             ulong dest = vm.PeekStack48();

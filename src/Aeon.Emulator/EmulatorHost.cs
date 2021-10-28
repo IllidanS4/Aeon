@@ -254,7 +254,7 @@ namespace Aeon.Emulator
         /// </summary>
         public void Dispose() => this.Dispose(true);
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(Compatibility.AggressiveOptimization)]
         private void EmulateInstructions(int count)
         {
             var vm = this.VirtualMachine;
@@ -444,7 +444,7 @@ namespace Aeon.Emulator
                 }
             }
         }
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(Compatibility.AggressiveOptimization)]
         private void EmulationLoop()
         {
             const int InstructionBatchCount = 500;
