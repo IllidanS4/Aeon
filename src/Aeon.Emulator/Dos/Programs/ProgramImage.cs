@@ -9,7 +9,7 @@ namespace Aeon.Emulator.Dos.Programs
     /// </summary>
     public abstract class ProgramImage
     {
-        private protected ProgramImage(VirtualPath path, Stream stream)
+        protected ProgramImage(VirtualPath path, Stream stream)
         {
             this.FullPath = path;
             Read(stream);
@@ -38,7 +38,7 @@ namespace Aeon.Emulator.Dos.Programs
         /// <summary>
         /// Gets the maximum number of paragraphs to allocate when the program is loaded.
         /// </summary>
-        internal abstract ushort MaximumParagraphs { get; }
+        protected internal abstract ushort MaximumParagraphs { get; }
 
         /// <summary>
         /// Loads the program image into a virtual machine's address space and sets
@@ -46,19 +46,19 @@ namespace Aeon.Emulator.Dos.Programs
         /// </summary>
         /// <param name="vm">Virtual machine to load the image into.</param>
         /// <param name="dataSegment">Default data segment for the program and the location of its PSP.</param>
-        internal abstract void Load(VirtualMachine vm, ushort dataSegment);
+        protected internal abstract void Load(VirtualMachine vm, ushort dataSegment);
         /// <summary>
         /// Loads the program image as an overlay at a specified address.
         /// </summary>
         /// <param name="vm">Virtual machine to load the image into.</param>
         /// <param name="overlaySegment">Segment to load the overlay.</param>
         /// <param name="relocationFactor">Value to add to relocation segments.</param>
-        internal abstract void LoadOverlay(VirtualMachine vm, ushort overlaySegment, int relocationFactor);
+        protected internal abstract void LoadOverlay(VirtualMachine vm, ushort overlaySegment, int relocationFactor);
         /// <summary>
         /// Reads the program file from a stream.
         /// </summary>
         /// <param name="stream">Stream from which image is read.</param>
-        internal abstract void Read(Stream stream);
+        protected internal abstract void Read(Stream stream);
 
         /// <summary>
         /// Reads an executable file image into memory.

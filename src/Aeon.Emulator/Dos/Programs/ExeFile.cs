@@ -8,7 +8,7 @@ using Aeon.Emulator.Memory;
 
 namespace Aeon.Emulator.Dos.Programs
 {
-    internal sealed class ExeFile : ProgramImage
+    public sealed class ExeFile : ProgramImage
     {
         private byte[] imageData;
         private readonly List<RealModeAddress> relocationTable = new List<RealModeAddress>();
@@ -59,7 +59,7 @@ namespace Aeon.Emulator.Dos.Programs
         /// </summary>
         public ReadOnlyCollection<RealModeAddress> RelocationEntries => relocationTable.AsReadOnly();
 
-        internal override ushort MaximumParagraphs
+        protected internal override ushort MaximumParagraphs
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Aeon.Emulator.Dos.Programs
             }
         }
 
-        internal override void Load(VirtualMachine vm, ushort dataSegment)
+        protected internal override void Load(VirtualMachine vm, ushort dataSegment)
         {
             if (vm == null)
                 throw new ArgumentNullException(nameof(vm));
@@ -104,7 +104,7 @@ namespace Aeon.Emulator.Dos.Programs
                 vm.PhysicalMemory.SetUInt16((ushort)(codeSegment + relocationEntry.Segment), relocationEntry.Offset, (ushort)(value + codeSegment));
             }
         }
-        internal override void LoadOverlay(VirtualMachine vm, ushort overlaySegment, int relocationFactor)
+        protected internal override void LoadOverlay(VirtualMachine vm, ushort overlaySegment, int relocationFactor)
         {
             var ptr = vm.PhysicalMemory.GetPointer(overlaySegment, 0);
             Marshal.Copy(imageData, 0, ptr, Math.Min(this.ImageSize, imageData.Length));
@@ -115,7 +115,7 @@ namespace Aeon.Emulator.Dos.Programs
                 vm.PhysicalMemory.SetUInt16((ushort)(overlaySegment + relocationEntry.Segment), relocationEntry.Offset, (ushort)(value + relocationFactor));
             }
         }
-        internal override void Read(Stream stream)
+        protected internal override void Read(Stream stream)
         {
             BinaryReader reader = new BinaryReader(stream);
             if (reader.ReadUInt16() != 0x5A4D)

@@ -6,7 +6,7 @@ using Aeon.Emulator.Dos.VirtualFileSystem;
 
 namespace Aeon.Emulator.Dos.Programs
 {
-    internal sealed class ComFile : ProgramImage
+    public sealed class ComFile : ProgramImage
     {
         public static readonly VirtualPath CommandPath = new VirtualPath("COMMAND.COM");
 
@@ -17,9 +17,9 @@ namespace Aeon.Emulator.Dos.Programs
         {
         }
 
-        internal override ushort MaximumParagraphs => 0xFFFF;
+        protected internal override ushort MaximumParagraphs => 0xFFFF;
 
-        internal override void Load(VirtualMachine vm, ushort dataSegment)
+        protected internal override void Load(VirtualMachine vm, ushort dataSegment)
         {
             if (vm == null)
                 throw new ArgumentNullException(nameof(vm));
@@ -41,8 +41,8 @@ namespace Aeon.Emulator.Dos.Programs
             var ptr = vm.PhysicalMemory.GetPointer(vm.Processor.CS, vm.Processor.IP);
             Marshal.Copy(imageData, 0, ptr, imageData.Length);
         }
-        internal override void LoadOverlay(VirtualMachine vm, ushort overlaySegment, int relocationFactor) => throw new NotSupportedException();
-        internal override void Read(Stream stream)
+        protected internal override void LoadOverlay(VirtualMachine vm, ushort overlaySegment, int relocationFactor) => throw new NotSupportedException();
+        protected internal override void Read(Stream stream)
         {
             int length = (int)stream.Length;
             imageData = new byte[length];
