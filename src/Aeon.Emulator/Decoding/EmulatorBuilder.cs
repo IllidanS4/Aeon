@@ -123,7 +123,7 @@ namespace Aeon.Emulator.Decoding
 
         private DecodeAndEmulate BuildWrapperMethod(MethodInfo method, Type firstArgType)
         {
-            var dynamicMethod = new DynamicMethod(string.Empty, typeof(void), new Type[] { typeof(VirtualMachine) }, typeof(EmulatorBuilder));
+            var dynamicMethod = new DynamicMethod(string.Empty, typeof(void), new Type[] { typeof(VirtualMachine) }, typeof(EmulatorBuilder), true);
             var il = dynamicMethod.GetILGenerator();
             il.LoadArgument(VmArgument);
             if (firstArgType == typeof(Processor))
@@ -158,7 +158,7 @@ namespace Aeon.Emulator.Decoding
 
             this.addressSize32 = addressSize32;
 
-            var dynamicMethod = new DynamicMethod(string.Empty, typeof(void), new Type[] { typeof(VirtualMachine) }, typeof(EmulatorBuilder));
+            var dynamicMethod = new DynamicMethod(string.Empty, typeof(void), new Type[] { typeof(VirtualMachine) }, typeof(EmulatorBuilder), true);
             this.il = dynamicMethod.GetILGenerator();
 
             var parameters = info.EmulateMethods[0].GetParameters();

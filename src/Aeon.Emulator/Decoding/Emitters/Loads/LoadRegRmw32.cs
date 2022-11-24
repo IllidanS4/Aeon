@@ -88,7 +88,7 @@ namespace Aeon.Emulator.Decoding.Emitters
         {
             // arg 0 = processor
 
-            var method = new DynamicMethod(string.Empty, typeof(uint), new[] { typeof(Processor) }, typeof(LoadRegRmw32));
+            var method = new DynamicMethod(string.Empty, typeof(uint), new[] { typeof(Processor) }, typeof(LoadRegRmw32), true);
             var il = method.GetILGenerator();
 
             if (rm != 4)
@@ -147,7 +147,7 @@ namespace Aeon.Emulator.Decoding.Emitters
         {
             // arg 0 = processor
 
-            var method = new DynamicMethod(string.Empty, typeof(uint), new[] { typeof(Processor) }, typeof(LoadRegRmw32));
+            var method = new DynamicMethod(string.Empty, typeof(uint), new[] { typeof(Processor) }, typeof(LoadRegRmw32), true);
             var il = method.GetILGenerator();
 
             if (rm != 4)
